@@ -12,8 +12,6 @@ void Pole(int X, int Y, int counter);
 const int maxX = 6, maxY = 6;
 T mas[maxX][maxY];
 
-int tmpX = 0, tmpY = 0;
-
 class symvol
 {
 private:
@@ -51,7 +49,7 @@ T symvol::get_random()
 	}
 }
 
-void Pole(int X, int Y, int counter)
+void Pole(int tmpX, int tmpY, int counter)
 {
 	if (counter == 2)
 	{
@@ -59,9 +57,9 @@ void Pole(int X, int Y, int counter)
 		counter = 0;
 	}
 	system("cls");
-	swap_symvol(X, Y, 1);
+	swap_symvol(tmpX, tmpY, 1);
 	mas_out();
-	swap_symvol(X, Y, 0);
+	swap_symvol(tmpX, tmpY, 0);
 	int choice = _getch();
 	if (choice == 224)
 		choice = _getch();
@@ -111,7 +109,7 @@ void Pole(int X, int Y, int counter)
 		}
 	if (choice == 13)
 	{
-		swap_symvol(X, Y, 2);
+		swap_symvol(tmpX, tmpY, 2);
 		Pole(tmpX, tmpY, ++counter);
 	}
 }
