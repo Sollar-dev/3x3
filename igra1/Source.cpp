@@ -26,8 +26,6 @@ public:
 	T get_random();
 };
 
-void Pole(int X, int Y, int counter)
-=======
 T symvol::get_random()
 {
 	int num = 1 + rand() % 5;
@@ -53,7 +51,7 @@ T symvol::get_random()
 	}
 }
 
-void Pole(int tmpX, int tmpY, int counter)
+void Pole(int X, int Y, int counter)
 
 {
 	if (counter == 2)
@@ -62,93 +60,67 @@ void Pole(int tmpX, int tmpY, int counter)
 		counter = 0;
 	}
 	system("cls");
-	swap_symvol(tmpX, tmpY, 1);
+	swap_symvol(X, Y, 1);
 	mas_out();
 
 	find_range();
 	swap_symvol(X, Y, 0);
 
-	swap_symvol(tmpX, tmpY, 0);
+	swap_symvol(X, Y, 0);
 
 	int choice = _getch();
 	if (choice == 224)
 		choice = _getch();
 	if (choice == 80)
-		if (tmpX != maxX - 1)
+		if (X != maxX - 1)
 		{
-			tmpX += 1;
-			Pole(tmpX, tmpY, counter);
+			X += 1;
+			Pole(X, Y, counter);
 		}
 		else
 		{
-			tmpX = 0;
-			Pole(tmpX, tmpY, counter);
+			X = 0;
+			Pole(X, Y, counter);
 		}
 	if (choice == 72)
-		if (tmpX != 0)
+		if (X != 0)
 		{
-			tmpX -= 1;
-			Pole(tmpX, tmpY, counter);
+			X -= 1;
+			Pole(X, Y, counter);
 		}
 		else
 		{
-			tmpX = maxX - 1;
-			Pole(tmpX, tmpY, counter);
+			X = maxX - 1;
+			Pole(X, Y, counter);
 		}
 	if (choice == 77)
-		if (tmpY != maxY - 1)
+		if (Y != maxY - 1)
 		{
-			tmpY += 1;
-			Pole(tmpX, tmpY, counter);
+			Y += 1;
+			Pole(X, Y, counter);
 		}
 		else
 		{
-			tmpY = 0;
-			Pole(tmpX, tmpY, counter);
+			Y = 0;
+			Pole(X, Y, counter);
 		}
 	if (choice == 75)
-		if (tmpY != 0)
+		if (Y != 0)
 		{
-			tmpY -= 1;
-			Pole(tmpX, tmpY, counter);
+			Y -= 1;
+			Pole(X, Y, counter);
 		}
 		else
 		{
-			tmpY = maxY - 1;
-			Pole(tmpX, tmpY, counter);
+			Y = maxY - 1;
+			Pole(X, Y, counter);
 		}
 	if (choice == 13)
 	{
-		swap_symvol(tmpX, tmpY, 2);
-		Pole(tmpX, tmpY, ++counter);
+		swap_symvol(X, Y, 2);
+		Pole(X, Y, ++counter);
 	}
 }
-
-T symvol::get_random()
-{
-	int num = 1 + rand() % 5;
-	switch (num)
-	{
-	case(1):
-		return sym11;
-		break;
-	case(2):
-		return sym21;
-		break;
-	case(3):
-		return sym31;
-		break;
-	case(4):
-		return sym41;
-		break;
-	case(5):
-		return sym51;
-		break;
-	default:
-		exit(1);
-	}
-}
-
 
 void swap_mestami()
 {
