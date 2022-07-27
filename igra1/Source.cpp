@@ -45,53 +45,53 @@ void Pole(int X, int Y, int counter)
 	if (choice == 224)
 		choice = _getch();
 	if (choice == 80)
-		if (X != maxX - 1)
+		if (tmpX != maxX - 1)
 		{
-			X += 1;
-			Pole(X, Y, counter);
+			tmpX += 1;
+			Pole(tmpX, tmpY, counter);
 		}
 		else
 		{
-			X = 0;
-			Pole(X, Y, counter);
+			tmpX = 0;
+			Pole(tmpX, tmpY, counter);
 		}
 	if (choice == 72)
-		if (X != 0)
+		if (tmpX != 0)
 		{
-			X -= 1;
-			Pole(X, Y, counter);
+			tmpX -= 1;
+			Pole(tmpX, tmpY, counter);
 		}
 		else
 		{
-			X = maxX - 1;
-			Pole(X, Y, counter);
+			tmpX = maxX - 1;
+			Pole(tmpX, tmpY, counter);
 		}
 	if (choice == 77)
-		if (Y != maxY - 1)
+		if (tmpY != maxY - 1)
 		{
-			Y += 1;
-			Pole(X, Y, counter);
+			tmpY += 1;
+			Pole(tmpX, tmpY, counter);
 		}
 		else
 		{
-			Y = 0;
-			Pole(X, Y, counter);
+			tmpY = 0;
+			Pole(tmpX, tmpY, counter);
 		}
 	if (choice == 75)
-		if (Y != 0)
+		if (tmpY != 0)
 		{
-			Y -= 1;
-			Pole(X, Y, counter);
+			tmpY -= 1;
+			Pole(tmpX, tmpY, counter);
 		}
 		else
 		{
-			Y = maxY - 1;
-			Pole(X, Y, counter);
+			tmpY = maxY - 1;
+			Pole(tmpX, tmpY, counter);
 		}
 	if (choice == 13)
 	{
 		swap_symvol(X, Y, 2);
-		Pole(X, Y, ++counter);
+		Pole(tmpX, tmpY, ++counter);
 	}
 }
 
