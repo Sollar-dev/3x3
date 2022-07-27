@@ -14,8 +14,6 @@ void delete_symvol(int start, int end, int layer, bool key);
 const int maxX = 5, maxY = 5;
 T mas[maxX][maxY];
 
-int tmpX = 0, tmpY = 0;
-
 class symvol
 {
 private:
@@ -29,6 +27,34 @@ public:
 };
 
 void Pole(int X, int Y, int counter)
+=======
+T symvol::get_random()
+{
+	int num = 1 + rand() % 5;
+	switch (num)
+	{
+	case(1):
+		return sym11;
+		break;
+	case(2):
+		return sym21;
+		break;
+	case(3):
+		return sym31;
+		break;
+	case(4):
+		return sym41;
+		break;
+	case(5):
+		return sym51;
+		break;
+	default:
+		exit(1);
+	}
+}
+
+void Pole(int tmpX, int tmpY, int counter)
+
 {
 	if (counter == 2)
 	{
@@ -36,10 +62,14 @@ void Pole(int X, int Y, int counter)
 		counter = 0;
 	}
 	system("cls");
-	swap_symvol(X, Y, 1);
+	swap_symvol(tmpX, tmpY, 1);
 	mas_out();
+
 	find_range();
 	swap_symvol(X, Y, 0);
+
+	swap_symvol(tmpX, tmpY, 0);
+
 	int choice = _getch();
 	if (choice == 224)
 		choice = _getch();
@@ -89,7 +119,7 @@ void Pole(int X, int Y, int counter)
 		}
 	if (choice == 13)
 	{
-		swap_symvol(X, Y, 2);
+		swap_symvol(tmpX, tmpY, 2);
 		Pole(tmpX, tmpY, ++counter);
 	}
 }
