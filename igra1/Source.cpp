@@ -11,7 +11,7 @@ void Pole(int X, int Y, int counter);
 void find_range();
 void delete_symvol(int start, int end, int layer, bool key);
 
-const int maxX = 6, maxY = 6;
+const int maxX = 5, maxY = 5;
 T mas[maxX][maxY];
 
 int tmpX = 0, tmpY = 0;
@@ -219,7 +219,7 @@ void find_range()
 	for (int i = 0; i < maxX; i++)
 	{
 		int count = 1, start, end;
-		for (int j = 0; j < maxY - 1; j++)
+		for (int j = 0; j <= maxY - 1; j++)
 		{
 			if (count == 3)
 			{
@@ -229,8 +229,36 @@ void find_range()
 			}
 			if (mas[i][j] == mas[i][j + 1])
 			{
+				if (count == 1)
+				{
+					start = j;
+				}
 				count++;
-				start = j;
+			}
+			else
+			{
+				count = 1;
+			}
+		}
+	}
+	for (int i = 0; i < maxX; i++)
+	{
+		int count = 1, start, end;
+		for (int j = 0; j <= maxY - 1; j++)
+		{
+			if (count == 3)
+			{
+				count = 1;
+				end = j;
+				delete_symvol(start, end, i, 1);
+			}
+			if (mas[j][i] == mas[j + 1][i])
+			{
+				if (count == 1)
+				{
+					start = j;
+				}
+				count++;
 			}
 			else
 			{
@@ -242,18 +270,41 @@ void find_range()
 
 void delete_symvol(int start, int end, int layer, bool key)
 {
-	for (int i = layer; i != 1; i--)
+	switch (key)
 	{
-		for (int j = start; j <= end; j++)
+	case(0):		//horizont line
+	{
+		for (int i = layer; i != 0; i--)
 		{
-			T tmp = mas[i - 1][j];
-			mas[i - 1][j] = mas[i][j];
-			mas[i][j] = tmp;
+			for (int j = start; j <= end; j++)
+			{
+				T tmp = mas[i - 1][j];
+				mas[i - 1][j] = mas[i][j];
+				mas[i][j] = tmp;
+			}
 		}
+		symvol sl;
+		for (int i = start; i <= end; i++)
+		{
+			mas[0][i] = sl.get_random();
+		}
+		break;
 	}
-	symvol sl;
-	for (int i = start; i <= end; i++)
+	case(1):		//vertical line
 	{
-		mas[0][i] = sl.get_random();
+		symvol sl;
+		for (int i = start; i <= end; i++)
+		{
+			for (int j = i; j > 0; j--)
+			{
+				T tmp = mas[j][layer];
+				mas[j][layer] = mas[j - 1][layer];
+				mas[j - 1][layer] = tmp;
+
+			}
+			mas[0][layer] = sl.get_random();
+		}
+		break;
+	}
 	}
 }
