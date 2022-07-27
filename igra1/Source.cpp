@@ -14,6 +14,8 @@ void delete_symvol(int start, int end, int layer, bool key);
 const int maxX = 5, maxY = 5;
 T mas[maxX][maxY];
 
+int tmpX = 0, tmpY = 0;
+
 class symvol
 {
 private:
@@ -36,6 +38,7 @@ void Pole(int X, int Y, int counter)
 	system("cls");
 	swap_symvol(X, Y, 1);
 	mas_out();
+
 	find_range();
 	swap_symvol(X, Y, 0);
 	int choice = _getch();
