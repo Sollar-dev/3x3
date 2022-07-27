@@ -14,8 +14,6 @@ void delete_symvol(int start, int end, int layer, bool key);
 const int maxX = 5, maxY = 5;
 T mas[maxX][maxY];
 
-int tmpX = 0, tmpY = 0;
-
 class symvol
 {
 private:
@@ -44,53 +42,53 @@ void Pole(int X, int Y, int counter)
 	if (choice == 224)
 		choice = _getch();
 	if (choice == 80)
-		if (tmpX != maxX - 1)
+		if (X != maxX - 1)
 		{
-			tmpX += 1;
-			Pole(tmpX, tmpY, counter);
+			X += 1;
+			Pole(X, Y, counter);
 		}
 		else
 		{
-			tmpX = 0;
-			Pole(tmpX, tmpY, counter);
+			X = 0;
+			Pole(X, Y, counter);
 		}
 	if (choice == 72)
-		if (tmpX != 0)
+		if (X != 0)
 		{
-			tmpX -= 1;
-			Pole(tmpX, tmpY, counter);
+			X -= 1;
+			Pole(X, Y, counter);
 		}
 		else
 		{
-			tmpX = maxX - 1;
-			Pole(tmpX, tmpY, counter);
+			X = maxX - 1;
+			Pole(X, Y, counter);
 		}
 	if (choice == 77)
-		if (tmpY != maxY - 1)
+		if (Y != maxY - 1)
 		{
-			tmpY += 1;
-			Pole(tmpX, tmpY, counter);
+			Y += 1;
+			Pole(X, Y, counter);
 		}
 		else
 		{
-			tmpY = 0;
-			Pole(tmpX, tmpY, counter);
+			Y = 0;
+			Pole(X, Y, counter);
 		}
 	if (choice == 75)
-		if (tmpY != 0)
+		if (Y != 0)
 		{
-			tmpY -= 1;
-			Pole(tmpX, tmpY, counter);
+			Y -= 1;
+			Pole(X, Y, counter);
 		}
 		else
 		{
-			tmpY = maxY - 1;
-			Pole(tmpX, tmpY, counter);
+			Y = maxY - 1;
+			Pole(X, Y, counter);
 		}
 	if (choice == 13)
 	{
 		swap_symvol(X, Y, 2);
-		Pole(tmpX, tmpY, ++counter);
+		Pole(X, Y, ++counter);
 	}
 }
 
