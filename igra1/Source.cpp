@@ -27,6 +27,7 @@ public:
 };
 
 T symvol::get_random()
+// получаем рандомный элемент
 {
 	int num = 1 + rand() % 5;
 	switch (num)
@@ -52,7 +53,7 @@ T symvol::get_random()
 }
 
 void Pole(int X, int Y, int counter)
-
+// поле с возможностью ходить
 {
 	if (counter == 2)
 	{
@@ -62,14 +63,10 @@ void Pole(int X, int Y, int counter)
 	system("cls");
 	swap_symvol(X, Y, 1);
 	mas_out();
-
 	find_range();
 	swap_symvol(X, Y, 0);
-
-	swap_symvol(X, Y, 0);
-
 	int choice = _getch();
-	if (choice == 224)
+	if (choice == 224)		// перемещение с помощью  стрелок
 		choice = _getch();
 	if (choice == 80)
 		if (X != maxX - 1)
@@ -115,7 +112,7 @@ void Pole(int X, int Y, int counter)
 			Y = maxY - 1;
 			Pole(X, Y, counter);
 		}
-	if (choice == 13)
+	if (choice == 13)		// выделение символа для последующей перестановки
 	{
 		swap_symvol(X, Y, 2);
 		Pole(X, Y, ++counter);
@@ -123,10 +120,11 @@ void Pole(int X, int Y, int counter)
 }
 
 void swap_mestami()
+// меняем местами 2 выбранных (в квадратных скобках) элемента
 {
 	T tmp1, tmp2;
 	int t1, t2, t3, t4;
-	for (int i = 0; i < maxX; i++)
+	for (int i = 0; i < maxX; i++)		// замена 2-го символа
 	{
 		for (int j = 0; j < maxY; j++)
 		{
@@ -137,7 +135,7 @@ void swap_mestami()
 			else if (mas[i][j] == "[~]") { tmp1 = mas[i][j]; t1 = i; t2 = j; }
 		}
 	}
-	for (int i = 0; i < maxX; i++)
+	for (int i = 0; i < maxX; i++)		// замена 1-го символа
 	{
 		for (int j = 0; j < maxY; j++)
 		{
@@ -148,63 +146,50 @@ void swap_mestami()
 			else if ((mas[i][j] == "[~]") && ((i != t1) || (j != t2))) { tmp2 = mas[i][j]; t3 = i; t4 = j; }
 		}
 	}
-	T tmp3 = mas[t3][t4];
+	T tmp3 = mas[t3][t4];			// меняем местами 2 символа  
 	mas[t3][t4] = mas[t1][t2];
 	mas[t1][t2] = tmp3;
-	swap_symvol(t1, t2, 3);
+	swap_symvol(t1, t2, 3);			// убираем квадратные скобки
 	swap_symvol(t3, t4, 3);
 }
 
 void swap_symvol(int X, int Y, int P)
+// для замены символов различных типов
 {
 	switch (P)
 	{
 	case(0):
 		if (mas[X][Y] == "<%>") { mas[X][Y] = " % "; }
-		if (mas[X][Y] == "<#>") { mas[X][Y] = " # "; }
-		if (mas[X][Y] == "<$>") { mas[X][Y] = " $ "; }
-		if (mas[X][Y] == "<@>") { mas[X][Y] = " @ "; }
-		if (mas[X][Y] == "<~>") { mas[X][Y] = " ~ "; }
+		else if (mas[X][Y] == "<#>") { mas[X][Y] = " # "; }
+		else if (mas[X][Y] == "<$>") { mas[X][Y] = " $ "; }
+		else if (mas[X][Y] == "<@>") { mas[X][Y] = " @ "; }
+		else if (mas[X][Y] == "<~>") { mas[X][Y] = " ~ "; }
 		break;
 	case(1):
 		if (mas[X][Y] == " % ") { mas[X][Y] = "<%>"; }
-		if (mas[X][Y] == " # ") { mas[X][Y] = "<#>"; }
-		if (mas[X][Y] == " $ ") { mas[X][Y] = "<$>"; }
-		if (mas[X][Y] == " @ ") { mas[X][Y] = "<@>"; }
-		if (mas[X][Y] == " ~ ") { mas[X][Y] = "<~>"; }
+		else if (mas[X][Y] == " # ") { mas[X][Y] = "<#>"; }
+		else if (mas[X][Y] == " $ ") { mas[X][Y] = "<$>"; }
+		else if (mas[X][Y] == " @ ") { mas[X][Y] = "<@>"; }
+		else if (mas[X][Y] == " ~ ") { mas[X][Y] = "<~>"; }
 	case(2):
 		if (mas[X][Y] == " % ") { mas[X][Y] = "[%]"; }
-		if (mas[X][Y] == " # ") { mas[X][Y] = "[#]"; }
-		if (mas[X][Y] == " $ ") { mas[X][Y] = "[$]"; }
-		if (mas[X][Y] == " @ ") { mas[X][Y] = "[@]"; }
-		if (mas[X][Y] == " ~ ") { mas[X][Y] = "[~]"; }
+		else if (mas[X][Y] == " # ") { mas[X][Y] = "[#]"; }
+		else if (mas[X][Y] == " $ ") { mas[X][Y] = "[$]"; }
+		else if (mas[X][Y] == " @ ") { mas[X][Y] = "[@]"; }
+		else if (mas[X][Y] == " ~ ") { mas[X][Y] = "[~]"; }
 		break;
 	case(3):
 		if (mas[X][Y] == "[%]") { mas[X][Y] = " % "; }
-		if (mas[X][Y] == "[#]") { mas[X][Y] = " # "; }
-		if (mas[X][Y] == "[$]") { mas[X][Y] = " $ "; }
-		if (mas[X][Y] == "[@]") { mas[X][Y] = " @ "; }
-		if (mas[X][Y] == "[~]") { mas[X][Y] = " ~ "; }
+		else if (mas[X][Y] == "[#]") { mas[X][Y] = " # "; }
+		else if (mas[X][Y] == "[$]") { mas[X][Y] = " $ "; }
+		else if (mas[X][Y] == "[@]") { mas[X][Y] = " @ "; }
+		else if (mas[X][Y] == "[~]") { mas[X][Y] = " ~ "; }
 		break;
-	}	
-}
-
-int main()
-{
-	symvol sl;
-	srand(time(NULL));
-	for (int i = 0; i < maxX; i++)
-	{
-		for (int j = 0; j < maxY; j++)
-		{
-			mas[i][j] = sl.get_random();
-		}
 	}
-	Pole(0, 0, 0);
-	return 0;
 }
 
 void mas_out()
+// вывод массива в консоль
 {
 	for (int i = 0; i < maxX; i++)
 	{
@@ -217,8 +202,9 @@ void mas_out()
 }
 
 void find_range()
+// нахождение последовательности символов
 {
-	for (int i = 0; i < maxX; i++)
+	for (int i = 0; i < maxX; i++)		//горизонтальная последовательность
 	{
 		int count = 1, start, end;
 		for (int j = 0; j <= maxY - 1; j++)
@@ -243,7 +229,7 @@ void find_range()
 			}
 		}
 	}
-	for (int i = 0; i < maxX; i++)
+	for (int i = 0; i < maxX; i++)		//вертикальная последовательность
 	{
 		int count = 1, start, end;
 		for (int j = 0; j <= maxY - 1; j++)
@@ -271,10 +257,11 @@ void find_range()
 }
 
 void delete_symvol(int start, int end, int layer, bool key)
+// смещение вверх и замена последовательности символов
 {
 	switch (key)
 	{
-	case(0):		//horizont line
+	case(0):		//горизонтальная последовательность
 	{
 		for (int i = layer; i != 0; i--)
 		{
@@ -292,7 +279,7 @@ void delete_symvol(int start, int end, int layer, bool key)
 		}
 		break;
 	}
-	case(1):		//vertical line
+	case(1):		//вертикальная последовательность
 	{
 		symvol sl;
 		for (int i = start; i <= end; i++)
@@ -309,4 +296,19 @@ void delete_symvol(int start, int end, int layer, bool key)
 		break;
 	}
 	}
+}
+
+int main()
+{
+	symvol sl;
+	srand(time(NULL));
+	for (int i = 0; i < maxX; i++)
+	{
+		for (int j = 0; j < maxY; j++)
+		{
+			mas[i][j] = sl.get_random();
+		}
+	}
+	Pole(0, 0, 0);
+	return 0;
 }
