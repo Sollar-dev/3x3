@@ -302,7 +302,7 @@ int main()
 {
 	symvol sl;
 	srand(time(NULL));
-	for (int i = 0; i < maxX; i++)
+	for (int i = 0; i < maxX; i++)		// заполнение массива
 	{
 		for (int j = 0; j < maxY; j++)
 		{
