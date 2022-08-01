@@ -52,7 +52,6 @@ T symvol::get_random()
 }
 
 void Pole(int X, int Y, int counter)
-
 {
 	if (counter == 2)
 	{
@@ -62,12 +61,9 @@ void Pole(int X, int Y, int counter)
 	system("cls");
 	swap_symvol(X, Y, 1);
 	mas_out();
-
 	find_range();
 	swap_symvol(X, Y, 0);
-
 	swap_symvol(X, Y, 0);
-
 	int choice = _getch();
 	if (choice == 224)
 		choice = _getch();
