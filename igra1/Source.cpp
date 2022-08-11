@@ -10,6 +10,7 @@ void swap_mestami();
 void Pole(int X, int Y, int counter);
 void find_range();
 void delete_symvol(int start, int end, int layer, bool key);
+int registr_key();
 
 const int maxX = 5, maxY = 5;
 T mas[maxX][maxY];
@@ -27,7 +28,7 @@ public:
 };
 
 T symvol::get_random()
-// получаем рандомный элемент
+// получаем случайный символ
 {
 	int num = 1 + rand() % 5;
 	switch (num)
@@ -52,6 +53,23 @@ T symvol::get_random()
 	}
 }
 
+int registr_key()
+{
+	int choice = _getch();
+	if (choice == 224)		// идентификация стрелок
+		choice = _getch();
+		if (choice == 80)		// вниз
+			return 1;
+		if (choice == 72)		// вверх
+			return 2;
+		if (choice == 77)		// вправо
+			return 3;
+		if (choice == 75)		// влево
+			return 4;
+	if (choice == 13)		// enter
+		return 5;
+}
+
 void Pole(int X, int Y, int counter)
 // поле с возможностью ходить
 {
@@ -65,10 +83,8 @@ void Pole(int X, int Y, int counter)
 	mas_out();
 	find_range();
 	swap_symvol(X, Y, 0);
-	int choice = _getch();
-	if (choice == 224)		// перемещение с помощью  стрелок
-		choice = _getch();
-	if (choice == 80)
+	int key = registr_key();
+	if (key == 1)
 		if (X != maxX - 1)
 		{
 			X += 1;
@@ -79,7 +95,7 @@ void Pole(int X, int Y, int counter)
 			X = 0;
 			Pole(X, Y, counter);
 		}
-	if (choice == 72)
+	if (key == 2)
 		if (X != 0)
 		{
 			X -= 1;
@@ -90,7 +106,7 @@ void Pole(int X, int Y, int counter)
 			X = maxX - 1;
 			Pole(X, Y, counter);
 		}
-	if (choice == 77)
+	if (key == 3)
 		if (Y != maxY - 1)
 		{
 			Y += 1;
@@ -101,7 +117,7 @@ void Pole(int X, int Y, int counter)
 			Y = 0;
 			Pole(X, Y, counter);
 		}
-	if (choice == 75)
+	if (key == 4)
 		if (Y != 0)
 		{
 			Y -= 1;
@@ -109,10 +125,10 @@ void Pole(int X, int Y, int counter)
 		}
 		else
 		{
-			Y = maxY - 1;
+			Y = maxX - 1;
 			Pole(X, Y, counter);
 		}
-	if (choice == 13)		// выделение символа для последующей перестановки
+	if (key == 5)		// выделение символа для последующей перестановки
 	{
 		swap_symvol(X, Y, 2);
 		Pole(X, Y, ++counter);
