@@ -4,9 +4,10 @@
 
 using T = std::string;
 
+void menu(int Y);
 void mas_out();
-void swap_symvol(int X, int Y, int P);
-void swap_mestami();
+void swap_symbol(int X, int Y, int P);
+void swap_betweenTwo();
 void Pole(int X, int Y, int counter);
 void find_range();
 void delete_symvol(int start, int end, int layer, bool key);
@@ -27,7 +28,7 @@ public:
 };
 
 T symvol::get_random()
-// получаем рандомный элемент
+// получаем случайный символ
 {
 	int num = 1 + rand() % 5;
 	switch (num)
@@ -57,14 +58,14 @@ void Pole(int X, int Y, int counter)
 {
 	if (counter == 2)
 	{
-		swap_mestami();
+		swap_betweenTwo();		// меняем местами 2 символа
 		counter = 0;
 	}
 	system("cls");
-	swap_symvol(X, Y, 1);
-	mas_out();
-	find_range();
-	swap_symvol(X, Y, 0);
+	swap_symbol(X, Y, 1);	// заключаем символ в скобки
+	mas_out();		// выводи массив на экран
+	find_range();	// поиск последовательности символов одного типа
+	swap_symbol(X, Y, 0);	// исключаем символ из скобок
 	int choice = _getch();
 	if (choice == 224)		// перемещение с помощью  стрелок
 		choice = _getch();
@@ -114,12 +115,12 @@ void Pole(int X, int Y, int counter)
 		}
 	if (choice == 13)		// выделение символа для последующей перестановки
 	{
-		swap_symvol(X, Y, 2);
+		swap_symbol(X, Y, 2);
 		Pole(X, Y, ++counter);
 	}
 }
 
-void swap_mestami()
+void swap_betweenTwo()
 // меняем местами 2 выбранных (в квадратных скобках) элемента
 {
 	T tmp1, tmp2;
@@ -146,14 +147,14 @@ void swap_mestami()
 			else if ((mas[i][j] == "[~]") && ((i != t1) || (j != t2))) { tmp2 = mas[i][j]; t3 = i; t4 = j; }
 		}
 	}
-	T tmp3 = mas[t3][t4];			// меняем местами 2 символа 
+	T tmp3 = mas[t3][t4];			// меняем местами 2 символа
 	mas[t3][t4] = mas[t1][t2];
 	mas[t1][t2] = tmp3;
-	swap_symvol(t1, t2, 3);			// убираем квадратные скобки
-	swap_symvol(t3, t4, 3);
+	swap_symbol(t1, t2, 3);			// убираем квадратные скобки
+	swap_symbol(t3, t4, 3);
 }
 
-void swap_symvol(int X, int Y, int P)
+void swap_symbol(int X, int Y, int P)
 // для замены символов различных типов
 {
 	switch (P)
@@ -298,17 +299,60 @@ void delete_symvol(int start, int end, int layer, bool key)
 	}
 }
 
+void menu(int Y)
+// меню игры
+{
+	system("cls");
+	if (Y == 1) { std::cout << "<Start>\n Exit"; }
+	else { std::cout << "Start\n <Exit>"; }
+	int maxY = 2;
+	int choice = _getch();
+	if (choice == 224)		// перемещение с помощью  стрелок вверх вниз
+		choice = _getch();
+	if (choice == 72)
+		if (Y != maxY - 1)
+		{
+			Y += 1;
+			menu(Y);
+		}
+		else
+		{
+			Y = 0;
+			menu(Y);
+		}
+	if (choice == 80)
+		if (Y != 0)
+		{
+			Y -= 1;
+			menu(Y);
+		}
+		else
+		{
+			Y = maxY - 1;
+			menu(Y);
+		}
+	if (choice == 13)
+	{
+		if (Y == 1) // старт игры
+		{
+			symvol sl;
+			srand(time(NULL));
+			for (int i = 0; i < maxX; i++)		// заполнение массива
+			{
+				for (int j = 0; j < maxY; j++)
+				{
+					mas[i][j] = sl.get_random();
+				}
+			}
+			Pole(0, 0, 0); // вызов игрового поля
+		}
+		if (Y == 2) // выход из игры
+			exit(0);
+	}
+
+}
+
 int main()
 {
-	symvol sl;
-	srand(time(NULL));
-	for (int i = 0; i < maxX; i++)		// заполнение массива
-	{
-		for (int j = 0; j < maxY; j++)
-		{
-			mas[i][j] = sl.get_random();
-		}
-	}
-	Pole(0, 0, 0);
-	return 0;
+	menu(1);
 }
