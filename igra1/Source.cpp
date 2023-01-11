@@ -10,7 +10,6 @@ void swap_mestami();
 void Pole(int X, int Y, int counter);
 void find_range();
 void delete_symvol(int start, int end, int layer, bool key);
-int registr_key();
 
 const int maxX = 5, maxY = 5;
 T mas[maxX][maxY];
@@ -53,25 +52,8 @@ T symvol::get_random()
 	}
 }
 
-int registr_key()
-{
-	int choice = _getch();
-	if (choice == 224)		// идентификация стрелок
-		choice = _getch();
-		if (choice == 80)		// вниз
-			return 1;
-		if (choice == 72)		// вверх
-			return 2;
-		if (choice == 77)		// вправо
-			return 3;
-		if (choice == 75)		// влево
-			return 4;
-	if (choice == 13)		// enter
-		return 5;
-}
-
 void Pole(int X, int Y, int counter)
-// поле с возможностью ходить
+// ���� � ������������ ������
 {
 	if (counter == 2)
 	{
@@ -83,8 +65,10 @@ void Pole(int X, int Y, int counter)
 	mas_out();
 	find_range();
 	swap_symvol(X, Y, 0);
-	int key = registr_key();
-	if (key == 1)
+	int choice = _getch();
+	if (choice == 224)		// перемещение с помощью  стрелок
+		choice = _getch();
+	if (choice == 80)
 		if (X != maxX - 1)
 		{
 			X += 1;
@@ -95,7 +79,7 @@ void Pole(int X, int Y, int counter)
 			X = 0;
 			Pole(X, Y, counter);
 		}
-	if (key == 2)
+	if (choice == 72)
 		if (X != 0)
 		{
 			X -= 1;
@@ -106,7 +90,7 @@ void Pole(int X, int Y, int counter)
 			X = maxX - 1;
 			Pole(X, Y, counter);
 		}
-	if (key == 3)
+	if (choice == 77)
 		if (Y != maxY - 1)
 		{
 			Y += 1;
@@ -117,7 +101,7 @@ void Pole(int X, int Y, int counter)
 			Y = 0;
 			Pole(X, Y, counter);
 		}
-	if (key == 4)
+	if (choice == 75)
 		if (Y != 0)
 		{
 			Y -= 1;
@@ -125,10 +109,10 @@ void Pole(int X, int Y, int counter)
 		}
 		else
 		{
-			Y = maxX - 1;
+			Y = maxY - 1;
 			Pole(X, Y, counter);
 		}
-	if (key == 5)		// выделение символа для последующей перестановки
+	if (choice == 13)		// ��������� ������� ��� ����������� ������������
 	{
 		swap_symvol(X, Y, 2);
 		Pole(X, Y, ++counter);
@@ -136,11 +120,11 @@ void Pole(int X, int Y, int counter)
 }
 
 void swap_mestami()
-// меняем местами 2 выбранных (в квадратных скобках) элемента
+// ������ ������� 2 ��������� (� ���������� �������) ��������
 {
 	T tmp1, tmp2;
 	int t1, t2, t3, t4;
-	for (int i = 0; i < maxX; i++)		// замена 2-го символа
+	for (int i = 0; i < maxX; i++)		// ������ 2-�� �������
 	{
 		for (int j = 0; j < maxY; j++)
 		{
@@ -151,7 +135,7 @@ void swap_mestami()
 			else if (mas[i][j] == "[~]") { tmp1 = mas[i][j]; t1 = i; t2 = j; }
 		}
 	}
-	for (int i = 0; i < maxX; i++)		// замена 1-го символа
+	for (int i = 0; i < maxX; i++)		// ������ 1-�� �������
 	{
 		for (int j = 0; j < maxY; j++)
 		{
@@ -162,15 +146,15 @@ void swap_mestami()
 			else if ((mas[i][j] == "[~]") && ((i != t1) || (j != t2))) { tmp2 = mas[i][j]; t3 = i; t4 = j; }
 		}
 	}
-	T tmp3 = mas[t3][t4];			// меняем местами 2 символа 
+	T tmp3 = mas[t3][t4];			// ������ ������� 2 ������� 
 	mas[t3][t4] = mas[t1][t2];
 	mas[t1][t2] = tmp3;
-	swap_symvol(t1, t2, 3);			// убираем квадратные скобки
+	swap_symvol(t1, t2, 3);			// ������� ���������� ������
 	swap_symvol(t3, t4, 3);
 }
 
 void swap_symvol(int X, int Y, int P)
-// для замены символов различных типов
+// ��� ������ �������� ��������� �����
 {
 	switch (P)
 	{
@@ -205,7 +189,7 @@ void swap_symvol(int X, int Y, int P)
 }
 
 void mas_out()
-// вывод массива в консоль
+// ����� ������� � �������
 {
 	for (int i = 0; i < maxX; i++)
 	{
@@ -218,9 +202,9 @@ void mas_out()
 }
 
 void find_range()
-// нахождение последовательности символов
+// ���������� ������������������ ��������
 {
-	for (int i = 0; i < maxX; i++)		//горизонтальная последовательность
+	for (int i = 0; i < maxX; i++)		//�������������� ������������������
 	{
 		int count = 1, start, end;
 		for (int j = 0; j <= maxY - 1; j++)
@@ -245,7 +229,7 @@ void find_range()
 			}
 		}
 	}
-	for (int i = 0; i < maxX; i++)		//вертикальная последовательность
+	for (int i = 0; i < maxX; i++)		//������������ ������������������
 	{
 		int count = 1, start, end;
 		for (int j = 0; j <= maxY - 1; j++)
@@ -273,11 +257,11 @@ void find_range()
 }
 
 void delete_symvol(int start, int end, int layer, bool key)
-// смещение вверх и замена последовательности символов
+// �������� ����� � ������ ������������������ ��������
 {
 	switch (key)
 	{
-	case(0):		//горизонтальная последовательность
+	case(0):		//�������������� ������������������
 	{
 		for (int i = layer; i != 0; i--)
 		{
@@ -295,7 +279,7 @@ void delete_symvol(int start, int end, int layer, bool key)
 		}
 		break;
 	}
-	case(1):		//вертикальная последовательность
+	case(1):		//������������ ������������������
 	{
 		symvol sl;
 		for (int i = start; i <= end; i++)
@@ -318,7 +302,7 @@ int main()
 {
 	symvol sl;
 	srand(time(NULL));
-	for (int i = 0; i < maxX; i++)		// заполнение массива
+	for (int i = 0; i < maxX; i++)		// ���������� �������
 	{
 		for (int j = 0; j < maxY; j++)
 		{
