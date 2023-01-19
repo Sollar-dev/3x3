@@ -14,8 +14,9 @@ void delete_symvol(int start, int end, int layer, bool key);
 
 const int maxX = 5, maxY = 5;
 T mas[maxX][maxY];
+int points = 0;
 
-class symvol
+class data
 {
 private:
 	T sym11 = " % ";
@@ -27,7 +28,7 @@ public:
 	T get_random();
 };
 
-T symvol::get_random()
+T data::get_random()
 // получаем случайный символ
 {
 	int num = 1 + rand() % 5;
@@ -192,6 +193,7 @@ void swap_symbol(int X, int Y, int P)
 void mas_out()
 // вывод массива в консоль
 {
+	data d;
 	for (int i = 0; i < maxX; i++)
 	{
 		for (int j = 0; j < maxY; j++)
@@ -200,11 +202,13 @@ void mas_out()
 		}
 		std::cout << '\n';
 	}
+	std::cout << "\n My score = " << points;
 }
 
 void find_range()
 // нахождение последовательности символов
 {
+	data d;
 	for (int i = 0; i < maxX; i++)		//горизонтальная последовательность
 	{
 		int count = 1, start, end;
@@ -214,6 +218,7 @@ void find_range()
 			{
 				count = 1;
 				end = j;
+				points += 3;
 				delete_symvol(start, end, i, 0);
 			}
 			if (mas[i][j] == mas[i][j + 1])
@@ -239,6 +244,7 @@ void find_range()
 			{
 				count = 1;
 				end = j;
+				points += 3;
 				delete_symvol(start, end, i, 1);
 			}
 			if (mas[j][i] == mas[j + 1][i])
@@ -273,7 +279,7 @@ void delete_symvol(int start, int end, int layer, bool key)
 				mas[i][j] = tmp;
 			}
 		}
-		symvol sl;
+		data sl;
 		for (int i = start; i <= end; i++)
 		{
 			mas[0][i] = sl.get_random();
@@ -282,7 +288,7 @@ void delete_symvol(int start, int end, int layer, bool key)
 	}
 	case(1):		//вертикальная последовательность
 	{
-		symvol sl;
+		data sl;
 		for (int i = start; i <= end; i++)
 		{
 			for (int j = i; j > 0; j--)
@@ -335,7 +341,7 @@ void menu(int Y)
 	{
 		if (Y == 1) // старт игры
 		{
-			symvol sl;
+			data sl;
 			srand(time(NULL));
 			for (int i = 0; i < maxX; i++)		// заполнение массива
 			{
